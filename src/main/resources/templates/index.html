@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:text="${pageTitle}"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <th:block th:include="blocks/style-files.html :: headerfiles"></th:block>
+</head>
+<body>
+<div class="site-wrap w-100">
+    <th:block th:insert="blocks/header :: siteMenu"></th:block>
+    <th:block th:insert="blocks/header :: header"></th:block>
+    <div class="swiper-container gallery-top">
+        <div class="swiper-wrapper">w
+            <div class="swiper-slide cover" th:each="itemPost , iStat  : ${posts}"
+                 th:style="'background-image: url(get-image/' + ${itemPost.getImage()} + ');'">
+                <a th:href="@{'get-image/' + ${itemPost.getImage()}}" data-fancybox="gallery" class="zoom"><span class="icon-search"></span></a>
+                <div class="img-info">
+                    <span class="btn-toggle-expand"><span class="icon-call_made"></span></span>
+                    <div class="img-info-content">
+                        <h2 th:text="${itemPost.getTitle()}"></h2>
+                        <div th:class="${iStat.index % 10 == 0} ? 'scrollbar-inner style-scrollbar-sm js-scrollbar-container' : ''">
+                            <p class="mb-0" th:text="${itemPost.getAnons()}"></p>
+                            <a class="mt-5 ml-5" th:href="@{'/post/' + ${itemPost.getId()}}">read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+    </div>
+    <div class="swiper-container gallery-thumbs">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide cover" th:each="itemPost : ${posts}"
+                 th:style="'background-image:url(get-image/' + ${itemPost.getImage()} + ');'"></div>
+        </div>
+    </div>
+
+</div> <!-- .site-wrap -->
+
+<th:block th:include="blocks/js-files.html :: jsfiles"></th:block>
+
+</body>
+</html>
